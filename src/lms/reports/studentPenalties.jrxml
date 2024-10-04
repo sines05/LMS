@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0a95179a-efa8-4a49-a7dd-5e7206ea0d32">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT
+    `student`.`id` 
+    , CONCAT(`student`.`lastname`,', ',`student`.`firstname`, ' ', SUBSTRING(`student`.`middlename`,1,1),'.') AS  student 
+    , `course`.`course`
+    , SUM((DATEDIFF(`book_borrowed`.`return_date_time`,`book_borrowed`.`borrowed_date_time`)- `penalty`.`days`)) AS days
+    , FORMAT(`penalty`.`rate`,2) AS rate 
+    , FORMAT(SUM(((DATEDIFF(`book_borrowed`.`return_date_time`,`book_borrowed`.`borrowed_date_time`)-`penalty`.`days`)*`penalty`.`rate`)),2) AS penalty  
+FROM
+    `lms`.`book_borrowed`
+    INNER JOIN `lms`.`student` 
+        ON (`book_borrowed`.`student_id` = `student`.`id`)
+    INNER JOIN `lms`.`book` 
+        ON (`book_borrowed`.`book_id` = `book`.`id`)
+    INNER JOIN `lms`.`penalty` 
+        ON (`book_borrowed`.`penalty_id` = `penalty`.`id`)
+    INNER JOIN `lms`.`course` 
+        ON (`student`.`course_id` = `course`.`id`)where  `book_borrowed`.`penalty_paid`=0  GROUP BY `book_borrowed`.`student_id` ORDER BY `student`.`lastname` ASC ]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="student" class="java.lang.String"/>
+	<field name="course" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="days" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rate" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="penalty" class="java.lang.String"/>
+	<group name="course">
+		<groupExpression><![CDATA[$F{course}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="7" width="552" height="24" forecolor="#B89F7D" backcolor="#F2EBDF" uuid="6d5697bc-8986-4fba-ba87-d9d7f8b2748f"/>
+					<rectangle>
+						<reportElement mode="Opaque" x="1" y="0" width="5" height="24" backcolor="#736343" uuid="1aa255be-5a3a-4056-9d6b-aeeec3ed8526"/>
+						<graphicElement>
+							<pen lineWidth="0.0"/>
+						</graphicElement>
+					</rectangle>
+					<textField>
+						<reportElement style="SubTitle" x="7" y="0" width="475" height="24" forecolor="#736343" uuid="49a4007b-1e76-4d8b-9a6e-24b5d562d821"/>
+						<textElement>
+							<font isBold="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{course}]]></textFieldExpression>
+					</textField>
+				</frame>
+				<staticText>
+					<reportElement style="Column header" x="7" y="31" width="210" height="19" forecolor="#736343" uuid="2e0c2167-9499-4316-badf-0d575f65d7f2"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Student]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="227" y="31" width="111" height="19" forecolor="#736343" uuid="938f8139-32e8-485d-bd69-74333392d159"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Penalty(Days)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="328" y="31" width="111" height="19" forecolor="#736343" uuid="db4ef247-03b8-4105-9227-cc5706d45970"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Penalty(Rate)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Column header" x="439" y="31" width="111" height="19" forecolor="#736343" uuid="fd327e71-7bb6-4d5b-af2f-58ab1e36eede"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[Penalty(Amount)]]></text>
+				</staticText>
+				<line>
+					<reportElement x="8" y="33" width="547" height="1" uuid="ec605d9f-b672-4f84-8752-40d5fd4b2f7c"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="19">
+				<line>
+					<reportElement x="8" y="0" width="547" height="1" uuid="e9e8af42-3acc-4ce8-967d-5c0fc9535167"/>
+				</line>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="74" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="1" y="0" width="551" height="62" uuid="912cfd06-af8b-4557-a8e3-1a3e256a1a39"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="20" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Aldrin Library Management System]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="47" width="555" height="20" forecolor="#736343" uuid="0f06053f-ad89-4406-bd23-cf048d8fc95c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="5" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="8" y="0" width="547" height="20" uuid="3cd72500-1ac8-4941-b840-c16fce886323"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="6" y="0" width="200" height="20" uuid="5ff3c520-73e6-43c1-ab99-fcde584f2696"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{student}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="218" y="0" width="41" height="20" uuid="861e7344-4e47-4af9-8c34-0b3a3f059935"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{days}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="326" y="0" width="57" height="20" uuid="014207af-c9ae-4606-957a-53bbb00df091"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{rate}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="436" y="0" width="68" height="20" uuid="30d0496a-d87a-4803-8bf6-18a37e7fa1b7"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{penalty}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<line>
+				<reportElement x="7" y="1" width="547" height="1" uuid="2c54e615-893f-4922-bd3e-00bdaa8433e0"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="f93471a2-fcca-4c5b-86a2-52777fda8299"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="597" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="a0aff7be-8dd5-48c5-b4b8-2ad3ae3e92df"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="533" y="0" width="40" height="20" forecolor="#736343" uuid="be1fe2e5-5b71-43c9-b81a-aa727f7e6d33"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="453" y="0" width="80" height="20" forecolor="#736343" uuid="54616de3-b0d7-48a2-b132-a8be35c5ac7f"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
