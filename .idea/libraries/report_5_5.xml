@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="report 5.5">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/report 5.5/commons-digester-2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/report 5.5/iText-2.1.7.js2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/report 5.5/log4j-1.2.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/report 5.5/commons-collections-3.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/report 5.5/spring.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/report 5.5/servlet-api-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/report 5.5/jasperreports-5.5.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/report 5.5/groovy-all-2.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/report 5.5/commons-logging-1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

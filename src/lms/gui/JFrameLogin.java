@@ -296,7 +296,7 @@ public class JFrameLogin extends javax.swing.JFrame {
 
         }
 
-//        
+//
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jTextFieldUsernameBackFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldUsernameBackFocusGained

@@ -61,7 +61,7 @@ public class JInternalFrameBooksList extends javax.swing.JInternalFrame implemen
         setRootPaneCheckingEnabled(true);
         desktopIcon = new JDesktopIcon(this);
         updateUI();
-        sun.awt.SunToolkit.checkAndSetPolicy(this);
+        //sun.awt.SunToolkit.checkAndSetPolicy(this);
         this.mainFrame = mainFrame;
         initComponents();
         setTable();

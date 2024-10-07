@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7f71f2ff-d519-49a4-90bf-06a2d6d1a015">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+    `book`.`title`
+    , `book`.`isbn`
+    ,`book`.`quantity` -COUNT((SELECT `book_borrowed`.`book_return`  WHERE `book_borrowed`.`book_return` =0 )) AS remainingQty
+    ,  COUNT((SELECT `book_borrowed`.`book_return`  WHERE `book_borrowed`.`book_return` =0 )) AS borrowQty
+    , `book`.`quantity` 
+    , FORMAT(`book`.`price`,2)  AS price
+    , `call_number_line1`.`letter`
+    ,`book`.`callNoL2`
+    ,`book`.`callNoL3`
+    ,`book`.`callNoL4`
+    
+FROM
+      `lms`.`book`
+    INNER JOIN `lms`.`publisher` 
+        ON (`book`.`publisher_id` = `publisher`.`id`)
+    INNER JOIN `lms`.`call_number_line1` 
+        ON (`book`.`callNoL1` = `call_number_line1`.`id`)
+    INNER JOIN `lms`.`book_borrowed` 
+        ON (`book_borrowed`.`book_id` = `book`.`id`) GROUP BY `book_borrowed`.`book_id` ORDER BY `call_number_line1`.`letter` ASC ;]]>
+	</queryString>
+	<field name="title" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isbn" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="remainingQty" class="java.lang.Long"/>
+	<field name="borrowQty" class="java.lang.Long"/>
+	<field name="quantity" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="price" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="letter" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="callNoL2" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="callNoL3" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="callNoL4" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="ec5b8031-a273-4c3e-8a7e-29d499690483"/>
+				<staticText>
+					<reportElement x="20" y="20" width="357" height="43" forecolor="#FFFFFF" uuid="30ad7015-280d-4b41-927e-b9ee41e4455f"/>
+					<textElement>
+						<font size="22" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Library Management System]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="49" forecolor="#FFFFFF" uuid="90808ffa-ef11-4f2e-ac75-c348341a5577"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Inventory]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="20" y="49" width="357" height="43" forecolor="#FFFFFF" uuid="9b3a04d8-4545-443f-836f-e66f86554655"/>
+					<textElement>
+						<font size="18" isBold="false" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[Books]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="33">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="0" width="595" height="33" backcolor="#CCCCCC" uuid="1f123814-63b6-410f-b276-998d002b69a0"/>
+			</frame>
+			<line>
+				<reportElement x="-20" y="31" width="595" height="1" forecolor="#666666" uuid="f05c2d7a-1515-4dd0-9296-54ab9b05ba23"/>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="24" y="0" width="178" height="32" forecolor="#006699" backcolor="#E6E6E6" uuid="8837d303-693e-4b17-b537-bd3080568aa1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Title]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="267" y="0" width="82" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="81fc6ab0-8f9d-4348-82cb-389a1da7da02"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Borrowed]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="343" y="0" width="81" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="d7fa54b9-7a04-417d-87fa-bc41973f1b3c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="495" y="0" width="60" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="a12ee3c7-64e6-4626-bcf7-a5aa613d7988"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Call No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="198" y="-1" width="67" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="c5ce9e49-ce52-4a5d-b593-7ba298ee07ae"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Remaining]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="1" y="0" width="23" height="32" forecolor="#006699" backcolor="#E6E6E6" uuid="1b8bede9-6cff-43b1-b783-7ed159be0b97"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="198" y="13" width="67" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="17af6e69-fa23-4bf2-8b1e-b63c0949711b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="273" y="13" width="67" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="1fd95235-8d04-4349-abea-3d73ce75b129"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="347" y="12" width="67" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="71cb051f-29dd-493f-afa6-8b3889c246dd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="416" y="12" width="67" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="45e155b2-dec9-4409-8ed4-99cec551fb92"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="411" y="0" width="81" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="5b2a6934-9d14-45f6-8f6d-4a9e423a4e99"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lacking]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="49">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="48" width="555" height="1" uuid="3ba2f836-7b4a-4890-800e-b57bd5a43c1e"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="24" y="0" width="174" height="48" uuid="ac46685d-e557-48e4-b27c-3c1cabae648d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="193" y="20" width="47" height="20" uuid="f4333b28-eb3b-4005-8300-263b7fc0a6c2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{remainingQty}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="343" y="20" width="47" height="20" uuid="f123edd2-43a2-4289-9ef2-53f8ecdf2fa1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="495" y="-1" width="55" height="15" uuid="6095e0bc-9d9b-4da7-b4bd-d5d026d5dbbc"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{letter}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="495" y="9" width="55" height="15" uuid="f7086945-b6c0-4df0-a3d2-71479dcd0397"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{callNoL2}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="495" y="21" width="55" height="15" uuid="495305cf-37fa-4c04-b5db-856931e4fc40"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{callNoL3}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="495" y="31" width="55" height="15" uuid="6aa42f86-51e4-4c8f-bc65-cd36b2250397"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{callNoL4}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="265" y="20" width="48" height="20" uuid="3c7cc44d-db10-429b-864e-f985e2531ac9"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Courier New" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{borrowQty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="15" width="20" height="20" uuid="d169fffb-18ea-4c3b-8dbc-13e84541fac2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="32281e36-8626-49c9-841e-8099c30addbe"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="8ab3f19c-e520-4829-9054-5b02ccf91dc8"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="1ea7edca-ba7d-4ed0-ad46-b8c83b2dcf65"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

@@ -58,7 +58,7 @@ public class JInternalFrameStudentPenalty extends javax.swing.JInternalFrame imp
         setRootPaneCheckingEnabled(true);
         desktopIcon = new JDesktopIcon(this);
         updateUI();
-        sun.awt.SunToolkit.checkAndSetPolicy(this);
+       // sun.awt.SunToolkit.checkAndSetPolicy(this);
         this.mainFrame = mainFrame;
         initComponents();
         setTable();

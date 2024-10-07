@@ -63,7 +63,7 @@ public class JInternalFrameBorrowedBooks extends javax.swing.JInternalFrame impl
         setRootPaneCheckingEnabled(true);
         desktopIcon = new JDesktopIcon(this);
         updateUI();
-        sun.awt.SunToolkit.checkAndSetPolicy(this);
+       // sun.awt.SunToolkit.checkAndSetPolicy(this);
         this.mainFrame = mainFrame;
         initComponents();
         selectedSearch();
